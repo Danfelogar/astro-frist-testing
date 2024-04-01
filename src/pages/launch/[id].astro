@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getLatestLaunchById } from "../../services/spacex";
+
+export const prerender = false// this is server
+
+const { id } = Astro.params;
+let launch
+
+if(id){
+    launch = await getLatestLaunchById(id as  string)
+}
+
+---
+
+<Layout title="Launch">
+    <artile>
+        <img class="w-52 h-auto" src={launch?.links.patch.small} alt={launch?.name} />
+        <h1 class="text-4xl text-white font-bold">Launch #{launch?.flight_number}</h1>
+        <p class="text-lg">{launch?.details}</p>
+    </artile>
+</Layout>
